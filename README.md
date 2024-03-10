@@ -4,5 +4,5 @@
 
 | Name Surname (initials) | GUID                                     |
 | ----------------------- | ---------------------------------------- |
-| AB                      | `{FD9D086C-532F-4AAC-BB99-69D7798837D8}` |
+| Maksymilian Owczarek    | `{435A4DBF-376D-41C7-9471-99F829B322DA}` |
 | Jan Kowalski            | `{44FBFCF5-4430-4964-878D-1867DC679E0D}` |
