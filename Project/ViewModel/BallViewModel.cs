@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Threading;
 using Dane;
 using Logika;
+
 
 namespace Project.ViewModel
 {
