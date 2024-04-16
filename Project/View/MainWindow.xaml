@@ -1,0 +1,48 @@
+﻿<Window x:Class="Project.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bilard" Height="483" Width="848">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#C3D898" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Ilość kul:" Width="70" VerticalAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" FontFamily="Century Gothic" FontWeight="Bold"/>
+                <TextBox Grid.Column="1" Width="100" x:Name="NumberInput" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Century Gothic"/>
+                <Button Grid.Column="1" Width="100" Content="Generuj" Click="GenerateBalls" Background="#596F62" FontFamily="Century Gothic" HorizontalAlignment="Right" Foreground="White" />
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Background="#1C3144" Margin="10">
+            <Border BorderBrush="Black" BorderThickness="10" Width="850" Height="397" Background="#7EA16B">
+                <Canvas>
+                    <ItemsControl ItemsSource="{Binding Balls}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Ellipse Width="50" Height="50" Fill="#70161E"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </Canvas>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

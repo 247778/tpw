@@ -1,4 +1,5 @@
-using BankAccountNS;
+using Project.View;
+
 namespace ProjectTests
 {
     [TestClass]
