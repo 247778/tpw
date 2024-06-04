@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Threading;
 using Dane;
@@ -7,9 +7,9 @@ using Logika;
 
 namespace Project.ViewModel
 {
-    public class BallViewModel : INotifyPropertyChanged
+    public class BallViewModel /*: INotifyPropertyChanged */
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
         public ObservableCollection<Ball> Balls { get; set; } = new ObservableCollection<Ball>();
 
@@ -37,7 +37,7 @@ namespace Project.ViewModel
                 _timer.Start();
             }
         }
-
+        private static readonly object collisionLock = new object();
         private async Task MoveBallsAsync()
         {
             var moveTasks = new List<Task>();
@@ -46,14 +46,18 @@ namespace Project.ViewModel
                 moveTasks.Add(Task.Run(() =>
                 {
                     _ballLogic.Move(ball);
+                    lock (collisionLock)
+                    {
+                        _ballLogic.CheckAndHandleCollision(ball, Balls);
+                    }
                 }));
             }
             await Task.WhenAll(moveTasks);
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        /*protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        }*/
     }
 }
