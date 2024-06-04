@@ -19,10 +19,17 @@ namespace ProjectWorking.ViewModel
 
         private readonly Random _random = new Random();
 
+        private Logger logger;
+
+        private DispatcherTimer loggingTimer = new DispatcherTimer();
+
         public BallViewModel()
         {
             _timer.Interval = TimeSpan.FromMilliseconds(20);
             _timer.Tick += async (s, e) => await MoveBallsAsync();
+            loggingTimer.Interval = TimeSpan.FromSeconds(1);
+            loggingTimer.Tick += async (s, e) => await LogBallsAsync();
+            logger = new Logger("C:\\Users\\silk7\\source\\repos\\tpw\\ball_logs.json");
         }
 
         public void InitializeBalls(int numberOfBalls)
@@ -35,6 +42,10 @@ namespace ProjectWorking.ViewModel
             if (!_timer.IsEnabled)
             {
                 _timer.Start();
+            }
+            if (!loggingTimer.IsEnabled)
+            {
+                loggingTimer.Start();
             }
         }
         private static readonly object collisionLock = new object();
@@ -55,9 +66,18 @@ namespace ProjectWorking.ViewModel
             await Task.WhenAll(moveTasks);
         }
 
-        /*protected virtual void OnPropertyChanged(string propertyName)
+        private async void StartLogging()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }*/
+            
+            while (true)
+            {
+                await logger.LogAsync(Balls);
+            await Task.Delay(1000); // Log every second
+            }
+        }
+        private async Task LogBallsAsync()
+        {
+            await logger.LogAsync(Balls);
+        }
     }
 }
